@@ -1,5 +1,11 @@
+[tool.black]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+
 [tool.poetry]
-name = "kaggle"
+name = "kaggle_competitions"
 version = "1.0.0"
 description = "All my Kaggle competitions"
 authors = ["alekseik1 <1alekseik1@gmail.com>"]
@@ -11,10 +17,13 @@ python = "^3.10"
 numpy = "^1.25.1"
 pandas = "^2.0.3"
 scikit-learn = "^1.3.0"
+ipykernel = "^6.25.0"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
+dvc = { version = "^3.9.0", extras = ["s3"] }
+kaggle = "^1.5.16"
 
 
 [tool.poetry.group.lint.dependencies]
