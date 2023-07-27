@@ -10,7 +10,7 @@ version = "1.0.0"
 description = "All my Kaggle competitions"
 authors = ["alekseik1 <1alekseik1@gmail.com>"]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -35,3 +35,6 @@ flake8 = "^6.0.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+titanic = "kaggle_competitions.titanic.run:run"
