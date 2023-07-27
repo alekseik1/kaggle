@@ -1,0 +1,66 @@
+[flake8]
+select =
+    # don't use built-ins names
+    B,  
+    # pep8 errors and warnings
+    E, W,  
+    # pyflakes
+    F,  
+    # documentation
+    D,  
+    # McCabe
+    C9, 
+    # Naming Conventions
+    N8, 
+    # Flake8-Pylint
+    #PL, 
+    # bandit
+    #B, S,  
+    # commas
+    #C,  
+    # docstrings
+    #D,  
+    # string-format
+    #P,  
+    # quotes
+    Q,  
+
+ignore =
+    # closing bracket does not match indentation of opening bracket's line
+    E123,  
+    # whitespace before ':'
+    E203,  
+    # missing whitespace around arithmetic operator
+    E226,  
+    # multiple spaces after ',' or tab after ','
+    E24,   
+    # line break before binary operator
+    W503,  
+    # line break after binary operator
+    W504,  
+
+    # allow modules without docstrings
+    D100,  
+    # allow classes without docstrings
+    D101,  
+    # allow methods without docstrings
+    D102,  
+    # allow functions without docstrings
+    D103,  
+    # allow packages without docstrings
+    D104,  
+    # allow no docstring in magic methods
+    D105,  
+    # allow __init__ without docstrings
+    D107,  
+    # Multi-line docstring summary should start at the second line, for docformatter
+    D213,  
+
+max-line-length = 120
+
+exclude =
+    cpp-1
+
+statistics = True
+show-source = True
+inline-quotes = "
