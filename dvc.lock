@@ -1,0 +1,38 @@
+schema: '2.0'
+stages:
+  titanic-run:
+    cmd: poetry run titanic
+    deps:
+    - path: kaggle_competitions/titanic/data/gender_submission.csv
+      hash: md5
+      md5: 30d1073b964a5d815431ec603a0de353
+      size: 3258
+    - path: kaggle_competitions/titanic/data/test.csv
+      hash: md5
+      md5: 7533b82eae4b582610cbd68aa636b017
+      size: 28629
+    - path: kaggle_competitions/titanic/data/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+    - path: kaggle_competitions/titanic/run.py
+      hash: md5
+      md5: 051a8eee3c8df52275b9b60669ebe48c
+      size: 2102
+    outs:
+    - path: kaggle_competitions/titanic/data/submission.csv
+      hash: md5
+      md5: f46286e302cc5e5f19b6484be25a446b
+      size: 2839
+    - path: kaggle_competitions/titanic/metrics.json
+      hash: md5
+      md5: dfa463739162b7cf60a98e7e2e40592a
+      size: 174
+  titanic-submit:
+    cmd: poetry run kaggle competitions submit -c titanic -f ./kaggle_competitions/titanic/data/submission.csv
+      -m "Automatic submit"
+    deps:
+    - path: kaggle_competitions/titanic/data/submission.csv
+      hash: md5
+      md5: f46286e302cc5e5f19b6484be25a446b
+      size: 2839

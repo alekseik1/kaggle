@@ -1,0 +1,16 @@
+stages:
+  titanic-run:
+    cmd: poetry run titanic
+    deps:
+      - kaggle_competitions/titanic/run.py
+      - kaggle_competitions/titanic/data/train.csv
+      - kaggle_competitions/titanic/data/test.csv
+      - kaggle_competitions/titanic/data/gender_submission.csv
+    outs:
+      - kaggle_competitions/titanic/data/submission.csv
+    metrics:
+      - kaggle_competitions/titanic/metrics.json
+  titanic-submit:
+    cmd: poetry run kaggle competitions submit -c titanic -f ./kaggle_competitions/titanic/data/submission.csv -m "Automatic submit"
+    deps:
+      - kaggle_competitions/titanic/data/submission.csv
