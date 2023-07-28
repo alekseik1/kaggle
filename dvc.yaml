@@ -40,6 +40,7 @@ stages:
     metrics:
       - kaggle_competitions/spaceship_titanic/metrics.json
   spaceship-titanic-submit:
+    frozen: true
     cmd: poetry run kaggle competitions submit -c spaceship-titanic -f ./kaggle_competitions/spaceship_titanic/data/submission.csv -m "Automatic submit"
     deps:
       - kaggle_competitions/spaceship_titanic/data/submission.csv
