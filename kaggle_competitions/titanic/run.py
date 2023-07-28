@@ -2,17 +2,16 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestClassifier
+from catboost import CatBoostClassifier
 from sklearn.metrics import log_loss, precision_score, recall_score
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder
 
 from kaggle_competitions.metrics import Metrics, metrics
 
 basedir = Path(__file__).parent
 
-cat_features: list[str] = ["Pclass", "Sex", "SibSp", "Parch", "Embarked"]
+cat_features: list[str] = ["Pclass", "Sex", "Embarked"]
+target_col = "Survived"
 
 
 def load_train_data(basedir: Path) -> pd.DataFrame:
@@ -24,25 +23,13 @@ def load_test_data(basedir: Path) -> pd.DataFrame:
 
 
 def data_preprocess(df: pd.DataFrame) -> pd.DataFrame:
-    return df
-
-
-def features_pipeline():
-    return ColumnTransformer(
-        [
-            (
-                "categories",
-                OneHotEncoder(dtype="int", sparse=False, drop="first", handle_unknown="ignore"),
-                cat_features,
-            ),
-        ],
-        remainder="drop",
-        verbose_feature_names_out=False,
+    return df.fillna({"Embarked": "undefined", "Age": df["Age"].mean()}).drop(
+        columns=set(df.columns) - set(cat_features) - {"Age", target_col}
     )
 
 
 def model():
-    return RandomForestClassifier(random_state=42)
+    return CatBoostClassifier(random_seed=42, cat_features=cat_features, verbose=False)
 
 
 def log_metrics(data: pd.DataFrame, y_true: np.ndarray, estimator: Pipeline, is_train: bool):
@@ -73,10 +60,11 @@ def run():
     df_train = load_train_data(basedir)
     df_test = load_test_data(basedir)
     df_train, df_test = data_preprocess(df_train), data_preprocess(df_test)
-    y_true = df_train["Survived"]
-    pipe = Pipeline([("features", features_pipeline()), ("model", model())])
-    pipe.fit(X=df_train, y=y_true)
-    metrics = log_metrics(data=df_train, y_true=y_true, estimator=pipe, is_train=True)
+    x, y = df_train.drop(columns=[target_col]), df_train[target_col]
+
+    pipe = model()
+    pipe.fit(X=x, y=y)
+    metrics = log_metrics(data=x, y_true=y, estimator=pipe, is_train=True)
     save_metrics(basedir, metrics)
     df_pred = make_prediction(df_test, pipe)
     df_pred.to_csv(basedir / "data" / "submission.csv", index=True)

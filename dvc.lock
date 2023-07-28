@@ -17,22 +17,22 @@ stages:
       size: 61194
     - path: kaggle_competitions/titanic/run.py
       hash: md5
-      md5: 9fdc67e7aed6a3aa737bde88c730fcaf
-      size: 2707
+      md5: b1d04354593df0eb41eeea71c6ac5ced
+      size: 2406
     outs:
     - path: kaggle_competitions/titanic/data/submission.csv
       hash: md5
-      md5: f46286e302cc5e5f19b6484be25a446b
+      md5: 3723ec3761d8339e8de5666372a81485
       size: 2839
     - path: kaggle_competitions/titanic/metrics.json
       hash: md5
-      md5: dfa463739162b7cf60a98e7e2e40592a
-      size: 174
+      md5: 3dce4879828d100696ae8cd811e98742
+      size: 160
   titanic-submit:
     cmd: poetry run kaggle competitions submit -c titanic -f ./kaggle_competitions/titanic/data/submission.csv
       -m "Automatic submit"
     deps:
     - path: kaggle_competitions/titanic/data/submission.csv
       hash: md5
-      md5: f46286e302cc5e5f19b6484be25a446b
+      md5: 3723ec3761d8339e8de5666372a81485
       size: 2839
