@@ -17,8 +17,8 @@ stages:
       size: 61194
     - path: kaggle_competitions/titanic/run.py
       hash: md5
-      md5: 051a8eee3c8df52275b9b60669ebe48c
-      size: 2102
+      md5: 9fdc67e7aed6a3aa737bde88c730fcaf
+      size: 2707
     outs:
     - path: kaggle_competitions/titanic/data/submission.csv
       hash: md5
