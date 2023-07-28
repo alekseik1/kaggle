@@ -23,7 +23,7 @@ def load_test(dir_: Path = basedir) -> pd.DataFrame:
 def run_baseline(x: pd.DataFrame, y: pd.Series, test_df: pd.DataFrame) -> np.ndarray:
     clf = DummyClassifier(strategy="most_frequent", random_state=random_state)
     clf.fit(x, y)
-    log_metrics(x, y, clf, model_name="baseline")
+    log_metrics(basedir, x, y, clf, model_name="baseline")
     return clf.predict(test_df)
 
 
