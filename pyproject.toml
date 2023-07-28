@@ -41,3 +41,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 titanic = "kaggle_competitions.titanic.run:run"
+spaceship_titanic = "kaggle_competitions.spaceship_titanic.run:run"

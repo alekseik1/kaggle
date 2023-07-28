@@ -52,3 +52,19 @@ stages:
       hash: md5
       md5: 2309cc5f04782ed9bb6016d9f4e381cf
       size: 61194
+  spaceship-titanic-load:
+    cmd: cd kaggle_competitions/spaceship_titanic/data && poetry run kaggle competitions
+      download -c spaceship-titanic && unzip spaceship-titanic.zip && rm spaceship-titanic.zip
+    outs:
+    - path: kaggle_competitions/spaceship_titanic/data/sample_submission.csv
+      hash: md5
+      md5: 3a6a8fbeadb084d5227ae05cf4f4e3e2
+      size: 59902
+    - path: kaggle_competitions/spaceship_titanic/data/test.csv
+      hash: md5
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: kaggle_competitions/spaceship_titanic/data/train.csv
+      hash: md5
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
