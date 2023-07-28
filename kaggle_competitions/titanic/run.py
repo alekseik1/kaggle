@@ -4,13 +4,14 @@ import numpy as np
 import pandas as pd
 from catboost import CatBoostClassifier
 from sklearn.metrics import log_loss, precision_score, recall_score
+from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 
 from kaggle_competitions.metrics import Metrics, metrics
 
 basedir = Path(__file__).parent
 
-cat_features: list[str] = ["Pclass", "Sex", "Embarked"]
+cat_features: list[str] = ["Pclass", "Sex", "Embarked", "Parch"]
 target_col = "Survived"
 
 
@@ -24,7 +25,7 @@ def load_test_data(basedir: Path) -> pd.DataFrame:
 
 def data_preprocess(df: pd.DataFrame) -> pd.DataFrame:
     return df.fillna({"Embarked": "undefined", "Age": df["Age"].mean()}).drop(
-        columns=set(df.columns) - set(cat_features) - {"Age", target_col}
+        columns=set(df.columns) - set(cat_features) - {"Age", target_col, "Fare"}
     )
 
 
@@ -62,7 +63,7 @@ def run():
     df_train, df_test = data_preprocess(df_train), data_preprocess(df_test)
     x, y = df_train.drop(columns=[target_col]), df_train[target_col]
 
-    pipe = model()
+    pipe = GridSearchCV(model(), param_grid={"custom_loss": ["Logloss", "CrossEntropy"]})
     pipe.fit(X=x, y=y)
     metrics = log_metrics(data=x, y_true=y, estimator=pipe, is_train=True)
     save_metrics(basedir, metrics)
