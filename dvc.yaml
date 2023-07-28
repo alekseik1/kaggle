@@ -1,4 +1,10 @@
 stages:
+  titanic-load:
+    cmd: cd kaggle_competitions/titanic/data && poetry run kaggle competitions download -c titanic && unzip titanic.zip && rm titanic.zip
+    outs:
+      - kaggle_competitions/titanic/data/train.csv
+      - kaggle_competitions/titanic/data/test.csv
+      - kaggle_competitions/titanic/data/gender_submission.csv
   titanic-run:
     cmd: poetry run titanic
     deps:

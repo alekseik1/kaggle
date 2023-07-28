@@ -36,3 +36,19 @@ stages:
       hash: md5
       md5: 50234c221c645105f8eace1d780beee3
       size: 2839
+  titanic-load:
+    cmd: cd kaggle_competitions/titanic/data && poetry run kaggle competitions download
+      -c titanic && unzip titanic.zip && rm titanic.zip
+    outs:
+    - path: kaggle_competitions/titanic/data/gender_submission.csv
+      hash: md5
+      md5: 30d1073b964a5d815431ec603a0de353
+      size: 3258
+    - path: kaggle_competitions/titanic/data/test.csv
+      hash: md5
+      md5: 7533b82eae4b582610cbd68aa636b017
+      size: 28629
+    - path: kaggle_competitions/titanic/data/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
