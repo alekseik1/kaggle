@@ -2,8 +2,14 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+from sklearn.compose import ColumnTransformer
 from sklearn.dummy import DummyClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.impute import SimpleImputer
 from sklearn.metrics import accuracy_score, log_loss, precision_score, recall_score
+from sklearn.model_selection import cross_validate
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import QuantileTransformer
 
 from kaggle_competitions.metrics import metrics
 
@@ -40,6 +46,25 @@ def log_metrics(dir_: Path, x, y_true, estimator, model_name):
 
 def save_submit(dir_: Path, predictions: np.ndarray, test_df: pd.DataFrame):
     pd.DataFrame({"Transported": predictions}, index=test_df.index).to_csv(dir_ / "data" / "submission.csv")
+
+
+def run_model(x, y):
+    pipe = Pipeline(
+        [
+            (
+                "fillna",
+                ColumnTransformer(
+                    [("age", SimpleImputer(strategy="most_frequent"), ["Age"])], verbose_feature_names_out=False
+                ),
+            ),
+            ("quantize", ColumnTransformer([("age", QuantileTransformer(), [0])])),
+            ("model", RandomForestClassifier(random_state=42)),
+        ]
+    )
+    cv = cross_validate(pipe, x, y, scoring=("precision", "recall", "accuracy", "log_loss"))
+    metrics.log_cv(cv)
+    pipe.fit(x, y)
+    return pipe
 
 
 def run():

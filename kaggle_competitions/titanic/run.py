@@ -36,13 +36,19 @@ def model():
 def log_metrics(data: pd.DataFrame, y_true: np.ndarray, estimator: Pipeline, is_train: bool):
     y_pred = estimator.predict(data)
     metrics.log_metrics(
-        metric_name="precision", model_name="random_forest", value=precision_score(y_true, y_pred), is_train=is_train
+        metric_name=f"precision_{'train' if is_train else 'test'}",
+        model_name="random_forest",
+        value=precision_score(y_true, y_pred),
     )
     metrics.log_metrics(
-        metric_name="recall", model_name="random_forest", value=recall_score(y_true, y_pred), is_train=is_train
+        metric_name=f"recall_{'train' if is_train else 'test'}",
+        model_name="random_forest",
+        value=recall_score(y_true, y_pred),
     )
     metrics.log_metrics(
-        metric_name="log_loss", model_name="random_forest", value=log_loss(y_true, y_pred), is_train=is_train
+        metric_name=f"log_loss__{'train' if is_train else 'test'}",
+        model_name="random_forest",
+        value=log_loss(y_true, y_pred),
     )
     return metrics
 

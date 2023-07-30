@@ -3,6 +3,10 @@ stages:
   titanic-run:
     cmd: poetry run titanic
     deps:
+    - path: kaggle_competitions/metrics.py
+      hash: md5
+      md5: 9c618b214497ca71edd6f1a795467649
+      size: 904
     - path: kaggle_competitions/titanic/data/gender_submission.csv
       hash: md5
       md5: 30d1073b964a5d815431ec603a0de353
@@ -17,8 +21,8 @@ stages:
       size: 61194
     - path: kaggle_competitions/titanic/run.py
       hash: md5
-      md5: 3743238d6105221d2c2384510df2dd22
-      size: 2543
+      md5: c4e47dc2cef09e535c7ebe3c6c575379
+      size: 2643
     outs:
     - path: kaggle_competitions/titanic/data/submission.csv
       hash: md5
@@ -26,8 +30,8 @@ stages:
       size: 2839
     - path: kaggle_competitions/titanic/metrics.json
       hash: md5
-      md5: 1674dae6e4f4cd574d55e139d4e7f6af
-      size: 174
+      md5: 50d72bdc734cb274c7a9eb285505c6d7
+      size: 172
   titanic-submit:
     cmd: poetry run kaggle competitions submit -c titanic -f ./kaggle_competitions/titanic/data/submission.csv
       -m "Automatic submit"
@@ -71,6 +75,10 @@ stages:
   spaceship-titanic-run:
     cmd: poetry run spaceship_titanic
     deps:
+    - path: kaggle_competitions/metrics.py
+      hash: md5
+      md5: 9c618b214497ca71edd6f1a795467649
+      size: 904
     - path: kaggle_competitions/spaceship_titanic/data/sample_submission.csv
       hash: md5
       md5: 3a6a8fbeadb084d5227ae05cf4f4e3e2
@@ -85,8 +93,8 @@ stages:
       size: 805421
     - path: kaggle_competitions/spaceship_titanic/run.py
       hash: md5
-      md5: b5ab91fb5428d0bb78adf89cbc91b31a
-      size: 1661
+      md5: f729394538065f7ee48a38efe7d09f7a
+      size: 2534
     outs:
     - path: kaggle_competitions/spaceship_titanic/data/submission.csv
       hash: md5
@@ -94,8 +102,8 @@ stages:
       size: 55625
     - path: kaggle_competitions/spaceship_titanic/metrics.json
       hash: md5
-      md5: 832a6c75a4bf5b87b4df8efc2ce77702
-      size: 194
+      md5: 018950ba9058b61011ff4b20610c59f3
+      size: 170
   spaceship-titanic-submit:
     cmd: poetry run kaggle competitions submit -c spaceship-titanic -f ./kaggle_competitions/spaceship_titanic/data/submission.csv
       -m "Automatic submit"

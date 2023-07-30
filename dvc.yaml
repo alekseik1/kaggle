@@ -9,6 +9,7 @@ stages:
     cmd: poetry run titanic
     deps:
       - kaggle_competitions/titanic/run.py
+      - kaggle_competitions/metrics.py
       - kaggle_competitions/titanic/data/train.csv
       - kaggle_competitions/titanic/data/test.csv
       - kaggle_competitions/titanic/data/gender_submission.csv
@@ -32,6 +33,7 @@ stages:
     cmd: poetry run spaceship_titanic
     deps:
       - kaggle_competitions/spaceship_titanic/run.py
+      - kaggle_competitions/metrics.py
       - kaggle_competitions/spaceship_titanic/data/train.csv
       - kaggle_competitions/spaceship_titanic/data/test.csv
       - kaggle_competitions/spaceship_titanic/data/sample_submission.csv
