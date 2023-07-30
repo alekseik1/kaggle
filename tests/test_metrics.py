@@ -1,6 +1,8 @@
 import json
 
+import numpy as np
 import pandas as pd
+import pytest
 from pandas.testing import assert_frame_equal
 
 from kaggle_competitions.metrics import Metrics
@@ -10,6 +12,11 @@ def test_metrics_singleton():
     m1 = Metrics()
     m2 = Metrics()
     assert id(m1) == id(m2)
+
+
+@pytest.fixture(autouse=True)
+def clear_metrics():
+    Metrics().clear()
 
 
 def test_save_and_load():
@@ -36,3 +43,10 @@ def test_as_pandas():
     df = m.as_pandas()
     expected_df = pd.DataFrame(index=["model_1", "model_2"], data=[[2.1, 3], [1, 5]], columns=["log_loss", "accuracy"])
     assert_frame_equal(df, expected_df)
+
+
+@pytest.mark.parametrize("data", [np.array([1, 2, 4, 5]), np.array([1, 2, 3, 4])])
+def test_from_cv(data):
+    m = Metrics()
+    m.from_cv("my_model", {"test_accuracy": data})
+    assert m.get_metrics("my_model", "accuracy") == np.mean(data)

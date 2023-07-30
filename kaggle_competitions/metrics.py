@@ -2,6 +2,7 @@ import collections
 import json
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 
@@ -29,9 +30,20 @@ class Metrics(object):
     def as_pandas(self):
         return pd.DataFrame.from_dict(self.metrics)
 
+    def from_cv(self, model_name: str, cv: dict[str, np.ndarray]):
+        for k, v in cv.items():
+            tmp = k.split("test_")
+            if len(tmp) == 1:
+                continue
+            metric_name = tmp[1]
+            self.log_metrics(value=np.mean(v), model_name=model_name, metric_name=metric_name)
+
     def save_metrics(self, file_path: Path):
         with open(file_path, "w") as f:
             f.write(json.dumps(self.as_dict(), indent=4))
+
+    def clear(self):
+        self.metrics = collections.defaultdict(dict)
 
 
 metrics = Metrics()
