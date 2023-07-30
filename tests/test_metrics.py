@@ -1,5 +1,8 @@
 import json
 
+import pandas as pd
+from pandas.testing import assert_frame_equal
+
 from kaggle_competitions.metrics import Metrics
 
 
@@ -22,3 +25,14 @@ def test_dump(tmp_path):
     with open(tmp_path / "metrics.json", "r") as f:
         loaded = json.load(f)
     assert loaded["loss__test_model"] == 1
+
+
+def test_as_pandas():
+    m = Metrics()
+    m.log_metrics(value=2.1, model_name="model_1", metric_name="log_loss")
+    m.log_metrics(value=3, model_name="model_1", metric_name="accuracy")
+    m.log_metrics(value=1, model_name="model_2", metric_name="log_loss")
+    m.log_metrics(value=5, model_name="model_2", metric_name="accuracy")
+    df = m.as_pandas()
+    expected_df = pd.DataFrame(index=["model_1", "model_2"], data=[[2.1, 3], [1, 5]], columns=["log_loss", "accuracy"])
+    assert_frame_equal(df, expected_df)

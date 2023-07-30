@@ -2,6 +2,8 @@ import collections
 import json
 from pathlib import Path
 
+import pandas as pd
+
 
 class Metrics(object):
     metrics = collections.defaultdict(dict)
@@ -23,6 +25,9 @@ class Metrics(object):
             for model, value in model_to_value.items():
                 rv[f"{metric_name}__{model}"] = value
         return rv
+
+    def as_pandas(self):
+        return pd.DataFrame.from_dict(self.metrics)
 
     def save_metrics(self, file_path: Path):
         with open(file_path, "w") as f:
