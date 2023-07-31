@@ -5,8 +5,8 @@ stages:
     deps:
     - path: kaggle_competitions/metrics.py
       hash: md5
-      md5: 9c618b214497ca71edd6f1a795467649
-      size: 904
+      md5: 28dc43e2ad628685f304b388cccda375
+      size: 1415
     - path: kaggle_competitions/titanic/data/gender_submission.csv
       hash: md5
       md5: 30d1073b964a5d815431ec603a0de353
@@ -77,8 +77,8 @@ stages:
     deps:
     - path: kaggle_competitions/metrics.py
       hash: md5
-      md5: 9c618b214497ca71edd6f1a795467649
-      size: 904
+      md5: 28dc43e2ad628685f304b388cccda375
+      size: 1415
     - path: kaggle_competitions/spaceship_titanic/data/sample_submission.csv
       hash: md5
       md5: 3a6a8fbeadb084d5227ae05cf4f4e3e2
@@ -93,22 +93,22 @@ stages:
       size: 805421
     - path: kaggle_competitions/spaceship_titanic/run.py
       hash: md5
-      md5: f729394538065f7ee48a38efe7d09f7a
-      size: 2534
+      md5: 5f173556248926546fc8af053352b638
+      size: 6989
     outs:
     - path: kaggle_competitions/spaceship_titanic/data/submission.csv
       hash: md5
-      md5: c6f2e8e0520217e211f83ada99a65fe8
-      size: 55625
+      md5: a729233d4106ffc77a1776de4a3ba87c
+      size: 57641
     - path: kaggle_competitions/spaceship_titanic/metrics.json
       hash: md5
-      md5: 018950ba9058b61011ff4b20610c59f3
-      size: 170
+      md5: 84b7db16b6a4d907d899961a1d4d7a87
+      size: 130
   spaceship-titanic-submit:
     cmd: poetry run kaggle competitions submit -c spaceship-titanic -f ./kaggle_competitions/spaceship_titanic/data/submission.csv
       -m "Automatic submit"
     deps:
     - path: kaggle_competitions/spaceship_titanic/data/submission.csv
       hash: md5
-      md5: d74ccd72c803887927f6cd7ec4bbd915
-      size: 21397
+      md5: a729233d4106ffc77a1776de4a3ba87c
+      size: 57641
