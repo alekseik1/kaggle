@@ -1,0 +1,24 @@
+stages:
+  digit-recognizer-load:
+    cmd: mkdir -p data && cd data && poetry run kaggle competitions download -c digit-recognizer && unzip digit-recognizer.zip && rm digit-recognizer.zip
+    outs:
+      - data/train.csv
+      - data/test.csv
+      - data/sample_submission.csv
+  # digit-recognizer-run:
+  #   cmd: poetry run spaceship_titanic
+  #   deps:
+  #     - run.py
+  #     - ../metrics.py
+  #     - data/train.csv
+  #     - data/test.csv
+  #     - data/sample_submission.csv
+  #   outs:
+  #     - data/submission.csv
+  #   metrics:
+  #     - metrics.json
+  # digit-recognizer-submit:
+  #   frozen: true
+  #   cmd: poetry run kaggle competitions submit -c spaceship-titanic -f ./data/submission.csv -m "Automatic submit"
+  #   deps:
+  #     - data/submission.csv

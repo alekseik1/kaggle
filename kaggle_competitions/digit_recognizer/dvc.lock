@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  digit-recognizer-load:
+    cmd: mkdir -p data && cd data && poetry run kaggle competitions download -c digit-recognizer
+      && unzip digit-recognizer.zip && rm digit-recognizer.zip
+    outs:
+    - path: data/sample_submission.csv
+      hash: md5
+      md5: 58e9527cf5dc55c3095d508caa6c0ef4
+      size: 240909
+    - path: data/test.csv
+      hash: md5
+      md5: 9f3b56df6157e910867d03b3b9d35b9c
+      size: 51118296
+    - path: data/train.csv
+      hash: md5
+      md5: 4003867bbac45a20a3367753b6a42e81
+      size: 76775041
