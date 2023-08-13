@@ -1,28 +1,4 @@
 stages:
-  titanic-load:
-    cmd: cd kaggle_competitions/titanic/data && poetry run kaggle competitions download -c titanic && unzip titanic.zip && rm titanic.zip
-    outs:
-      - kaggle_competitions/titanic/data/train.csv
-      - kaggle_competitions/titanic/data/test.csv
-      - kaggle_competitions/titanic/data/gender_submission.csv
-  titanic-run:
-    cmd: poetry run titanic
-    deps:
-      - kaggle_competitions/titanic/run.py
-      - kaggle_competitions/metrics.py
-      - kaggle_competitions/titanic/data/train.csv
-      - kaggle_competitions/titanic/data/test.csv
-      - kaggle_competitions/titanic/data/gender_submission.csv
-    outs:
-      - kaggle_competitions/titanic/data/submission.csv
-    metrics:
-      - kaggle_competitions/titanic/metrics.json
-  titanic-submit:
-    frozen: true
-    cmd: poetry run kaggle competitions submit -c titanic -f ./kaggle_competitions/titanic/data/submission.csv -m "Automatic submit"
-    deps:
-      - kaggle_competitions/titanic/data/submission.csv
-
   spaceship-titanic-load:
     cmd: cd kaggle_competitions/spaceship_titanic/data && poetry run kaggle competitions download -c spaceship-titanic && unzip spaceship-titanic.zip && rm spaceship-titanic.zip
     outs:

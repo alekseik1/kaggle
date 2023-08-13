@@ -1,0 +1,24 @@
+stages:
+  titanic-load:
+    cmd: mkdir -p data && cd data && poetry run kaggle competitions download -c titanic && unzip titanic.zip && rm titanic.zip
+    outs:
+      - data/train.csv
+      - data/test.csv
+      - data/gender_submission.csv
+  titanic-run:
+    cmd: poetry run titanic
+    deps:
+      - run.py
+      - ../metrics.py
+      - data/train.csv
+      - data/test.csv
+      - data/gender_submission.csv
+    outs:
+      - data/submission.csv
+    metrics:
+      - metrics.json
+  titanic-submit:
+    frozen: true
+    cmd: poetry run kaggle competitions submit -c titanic -f ./data/submission.csv -m "Automatic submit"
+    deps:
+      - data/submission.csv

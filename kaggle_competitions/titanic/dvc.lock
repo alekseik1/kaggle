@@ -1,0 +1,58 @@
+schema: '2.0'
+stages:
+  titanic-load:
+    cmd: mkdir -p data && cd data && poetry run kaggle competitions download -c titanic
+      && unzip titanic.zip && rm titanic.zip
+    outs:
+    - path: data/gender_submission.csv
+      hash: md5
+      md5: 30d1073b964a5d815431ec603a0de353
+      size: 3258
+    - path: data/test.csv
+      hash: md5
+      md5: 7533b82eae4b582610cbd68aa636b017
+      size: 28629
+    - path: data/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+  titanic-run:
+    cmd: poetry run titanic
+    deps:
+    - path: ../metrics.py
+      hash: md5
+      md5: 28dc43e2ad628685f304b388cccda375
+      size: 1415
+    - path: data/gender_submission.csv
+      hash: md5
+      md5: 30d1073b964a5d815431ec603a0de353
+      size: 3258
+    - path: data/test.csv
+      hash: md5
+      md5: 7533b82eae4b582610cbd68aa636b017
+      size: 28629
+    - path: data/train.csv
+      hash: md5
+      md5: 2309cc5f04782ed9bb6016d9f4e381cf
+      size: 61194
+    - path: run.py
+      hash: md5
+      md5: c4e47dc2cef09e535c7ebe3c6c575379
+      size: 2643
+    outs:
+    - path: data/submission.csv
+      hash: md5
+      md5: 50234c221c645105f8eace1d780beee3
+      size: 2839
+    - path: metrics.json
+      hash: md5
+      md5: 50d72bdc734cb274c7a9eb285505c6d7
+      size: 172
+  titanic-submit:
+    cmd: poetry run kaggle competitions submit -c titanic -f ./data/submission.csv
+      -m "Automatic submit"
+    deps:
+    - path: data/submission.csv
+      hash: md5
+      md5: 50234c221c645105f8eace1d780beee3
+      size: 2839
