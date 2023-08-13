@@ -1,0 +1,58 @@
+schema: '2.0'
+stages:
+  spaceship-titanic-load:
+    cmd: mkdir -p data && cd data && poetry run kaggle competitions download -c spaceship-titanic
+      && unzip spaceship-titanic.zip && rm spaceship-titanic.zip
+    outs:
+    - path: data/sample_submission.csv
+      hash: md5
+      md5: 3a6a8fbeadb084d5227ae05cf4f4e3e2
+      size: 59902
+    - path: data/test.csv
+      hash: md5
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: data/train.csv
+      hash: md5
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
+  spaceship-titanic-run:
+    cmd: poetry run spaceship_titanic
+    deps:
+    - path: ../metrics.py
+      hash: md5
+      md5: 28dc43e2ad628685f304b388cccda375
+      size: 1415
+    - path: data/sample_submission.csv
+      hash: md5
+      md5: 3a6a8fbeadb084d5227ae05cf4f4e3e2
+      size: 59902
+    - path: data/test.csv
+      hash: md5
+      md5: 5ded803886f27a2f241763327b14a19e
+      size: 372487
+    - path: data/train.csv
+      hash: md5
+      md5: 8cf8d6d39aecf7cc6466eb79b0ed6e1b
+      size: 805421
+    - path: run.py
+      hash: md5
+      md5: 5f173556248926546fc8af053352b638
+      size: 6989
+    outs:
+    - path: data/submission.csv
+      hash: md5
+      md5: a729233d4106ffc77a1776de4a3ba87c
+      size: 57641
+    - path: metrics.json
+      hash: md5
+      md5: 84b7db16b6a4d907d899961a1d4d7a87
+      size: 130
+  spaceship-titanic-submit:
+    cmd: poetry run kaggle competitions submit -c spaceship-titanic -f ./data/submission.csv
+      -m "Automatic submit"
+    deps:
+    - path: data/submission.csv
+      hash: md5
+      md5: a729233d4106ffc77a1776de4a3ba87c
+      size: 57641
